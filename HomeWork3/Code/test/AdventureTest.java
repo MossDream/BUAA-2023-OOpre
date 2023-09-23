@@ -208,6 +208,16 @@ public class AdventureTest {
     }
 
     @Test
+    public void getName() {
+        assertEquals("adventure", adventure.getName());
+    }
+
+    @Test
+    public void getId() {
+        assertEquals(1, adventure.getId());
+    }
+
+    @Test
     public void getTakenBottles() {
         // 上面的方法已经测试过
         System.out.println("Tested.");

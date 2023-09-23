@@ -164,4 +164,12 @@ public class Adventure {
     public int getMaxBots() {
         return maxBots;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getId() {
+        return id;
+    }
 }

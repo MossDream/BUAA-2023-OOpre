@@ -197,21 +197,3 @@ fail to eat foodName
 6. 操作数满足$1\le n\le2000$
 7. 操作 9-11保证该冒险者拥有操作中提到 id 的药水瓶/装备/食物
 8. 操作 12-13 **不**保证提到的物品已经被携带
-
-### 提示
-
-考虑到正课尚未讲解有关输入解析的内容，我们在此提供一份输入解析代码，同学们可以将其复制到自己代码中的适当位置直接使用，当然，同学们也可以自行设计代码来进行输入解析。
-
-```java
-ArrayList<ArrayList<String>> inputInfo = new ArrayList<>(); // 解析后的输入将会存进该容器中, 类似于c语言的二维数组
-Scanner scanner = new Scanner(System.in);
-int n = Integer.parseInt(scanner.nextLine().trim()); // 读取行数
-for (int i = 0; i < n; ++i) {
-    String nextLine = scanner.nextLine(); // 读取本行指令
-    String[] strings = nextLine.trim().split(" +"); // 按空格对行进行分割
-    inputInfo.add(new ArrayList<>(Arrays.asList(strings))); // 将指令分割后的各个部分存进容器中
-}
-```
-
-经过这段代码，输入的信息会被存入 `inputInfo` 这个"二维数组"中，遍历该容器即可取出各行指令及其各个部分。
-

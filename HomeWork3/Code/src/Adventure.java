@@ -67,7 +67,7 @@ public class Adventure {
     }
 
     public void useBottle(String bottleName) {
-        if (takenBottles.containsKey((bottleName))) {
+        if (takenBottles.containsKey(bottleName) && !takenBottles.get(bottleName).isEmpty()) {
             Map.Entry<Integer, Bottle> entry = takenBottles.get(bottleName).firstEntry();
             int bottleId = entry.getKey();
             Bottle bottle = entry.getValue();
@@ -89,7 +89,7 @@ public class Adventure {
     }
 
     public void eatFood(String foodName) {
-        if (takenFoods.containsKey(foodName)) {
+        if (takenFoods.containsKey(foodName) && !takenFoods.get(foodName).isEmpty()) {
             Map.Entry<Integer, Food> entry = takenFoods.get(foodName).pollFirstEntry();
             int foodId = entry.getKey();
             Food food = entry.getValue();
@@ -108,18 +108,36 @@ public class Adventure {
     public PrintInfo removeBottle(int bottleId) {
         String name = bottles.get(bottleId).getName();
         bottles.remove(bottleId); // 根据key删除元素
+        if (takenBottles.containsKey(name)) {
+            takenBottles.get(name).remove(bottleId);
+            if (takenBottles.get(name).isEmpty()) {
+                takenBottles.remove(name);
+            }
+        }
         return new PrintInfo(bottles.size(), name);
     }
 
     public PrintInfo removeEquipment(int equipmentId) {
         String name = equipments.get(equipmentId).getName();
         equipments.remove(equipmentId);
+        if (takenEquipments.containsKey(name)) {
+            int id = takenEquipments.get(name).getId();
+            if (id == equipmentId) {
+                takenEquipments.remove(name);
+            }
+        }
         return new PrintInfo(equipments.size(), name);
     }
 
     public PrintInfo removeFood(int foodId) {
         String name = foods.get(foodId).getName();
         foods.remove(foodId);
+        if (takenFoods.containsKey(name)) {
+            takenFoods.get(name).remove(foodId);
+            if (takenFoods.get(name).isEmpty()) {
+                takenFoods.remove(name);
+            }
+        }
         return new PrintInfo(foods.size(), name);
     }
 

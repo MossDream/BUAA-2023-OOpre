@@ -145,23 +145,72 @@ Food：ID，名字，能量(energy)
 
 # Part 2
 
-仍然是*Junit*测试，这次有覆盖率要求，按照教程操作即可。  
+仍然是*Junit*测试，这次有覆盖率要求，按照教程操作即可。
+
 ## Part 2新增内容
-> 在后续的过程中，我发现不少人对于Junit的覆盖率要求比较头疼。在正式提交评测前，我本人也对Main类的结构进行了重新修改，这里分享一下我的大致结构。   
+
+> 在后续的过程中，我发现不少人对于Junit的覆盖率要求比较头疼。在正式提交评测前，我本人也对Main类的结构进行了重新修改，这里分享一下我的大致结构。
 
 ```java
-public static void main(String[] args) {
+public static void main(String[]args){
         int n;
-        HashMap<Integer, Adventure> advs = new HashMap<>();
-        Scanner scanner = new Scanner(System.in);
-        n = Integer.parseInt(scanner.nextLine().trim()); //注意，直接用nextInt()会出错
-        for (int i = 0; i < n; i++) {
-            String nextLine = scanner.nextLine(); // 以一行字符串的形式读入一条指令
-            makeChoice(advs, getOrders(nextLine));
+        HashMap<Integer, Adventure> advs=new HashMap<>();
+        Scanner scanner=new Scanner(System.in);
+        n=Integer.parseInt(scanner.nextLine().trim()); //注意，直接用nextInt()会出错
+        for(int i=0;i<n; i++){
+        String nextLine=scanner.nextLine(); // 以一行字符串的形式读入一条指令
+        makeChoice(advs,getOrders(nextLine));
             /*getOrders把一行指令拆成各部分，返回一个ArrayList<String>，其中第一个元素是指令类型，后面的元素是指令的参数
              makeChoice根据指令类型，调用相应的方法，switch语句就在该方法中*/
         }
-    }
+        }
 ```
 
 **需要遵守的原则是，`main`方法中尽量只有输入处理，且所有输入处理都在这里面完成。然后对其他所有方法编写单元测试。**
+
+# Part 3 bug修复记录
+
+## Bug 001
+
+### 说明
+
+`remove`型函数执行时，需要将背包里的相应物品也一并删除！
+
+### 改动详情
+
+在`Adventure.java`文件中：
+
+```diff
+
+//现第70行
+-  if (takenBottles.containsKey(bottleName))  
++  if (takenBottles.containsKey(bottleName) && !takenBottles.get(bottleName).isEmpty())
+
+//现第92行
+-  if (takenFoods.containsKey(foodName)) 
++  if (takenFoods.containsKey(foodName) && !takenFoods.get(foodName).isEmpty())  
+
+//现第111行
++          if (takenBottles.containsKey(name)) {
++            takenBottles.get(name).remove(bottleId);
++            if (takenBottles.get(name).isEmpty()) {
++                takenBottles.remove(name);
++            }
++        }
+
+//现第123行
++          if (takenEquipments.containsKey(name)) {
++            int id = takenEquipments.get(name).getId();
++            if (id == equipmentId) {
++                takenEquipments.remove(name);
++            }
++        }
+
+//现第135行
++          if (takenFoods.containsKey(name)) {
++            takenFoods.get(name).remove(foodId);
++            if (takenFoods.get(name).isEmpty()) {
++                takenFoods.remove(name);
++            }
++        }
+```

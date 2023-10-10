@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Scanner;
 
 import static org.junit.Assert.assertEquals;
 
@@ -362,72 +363,73 @@ public class MainTest {
         HashMap<String, ArrayList<String>> logByDate = new HashMap<>();
         HashMap<Integer, ArrayList<String>> logByAttacker = new HashMap<>();
         HashMap<Integer, ArrayList<String>> logByAttacked = new HashMap<>();
+        Scanner scanner = new Scanner(System.in);
         Main.makeChoice(adventures, advNameToId, fight,
-                logByDate, logByAttacker, logByAttacked, orders);
+                logByDate, logByAttacker, logByAttacked, orders, scanner);
         assertEquals("test", adventures.get(123).getName());
         line = "2 123 1 test 100";
         orders = Main.getOrders(line);
         Main.makeChoice(adventures, advNameToId, fight,
-                logByDate, logByAttacker, logByAttacked, orders);
+                logByDate, logByAttacker, logByAttacked, orders, scanner);
         line = "10 123 1";
         orders = Main.getOrders(line);
         Main.makeChoice(adventures, advNameToId, fight,
-                logByDate, logByAttacker, logByAttacked, orders);
+                logByDate, logByAttacker, logByAttacked, orders, scanner);
         line = "12 123 test";
         orders = Main.getOrders(line);
         Main.makeChoice(adventures, advNameToId, fight,
-                logByDate, logByAttacker, logByAttacked, orders);
+                logByDate, logByAttacker, logByAttacked, orders, scanner);
         line = "3 123 1";
         orders = Main.getOrders(line);
         Main.makeChoice(adventures, advNameToId, fight,
-                logByDate, logByAttacker, logByAttacked, orders);
+                logByDate, logByAttacker, logByAttacked, orders, scanner);
         line = "4 123 1 test 100";
         orders = Main.getOrders(line);
         Main.makeChoice(adventures, advNameToId, fight,
-                logByDate, logByAttacker, logByAttacked, orders);
+                logByDate, logByAttacker, logByAttacked, orders, scanner);
         line = "6 123 1";
         orders = Main.getOrders(line);
         Main.makeChoice(adventures, advNameToId, fight,
-                logByDate, logByAttacker, logByAttacked, orders);
+                logByDate, logByAttacker, logByAttacked, orders, scanner);
         line = "9 123 1";
         orders = Main.getOrders(line);
         Main.makeChoice(adventures, advNameToId, fight,
-                logByDate, logByAttacker, logByAttacked, orders);
+                logByDate, logByAttacker, logByAttacked, orders, scanner);
         line = "5 123 1";
         orders = Main.getOrders(line);
         Main.makeChoice(adventures, advNameToId, fight,
-                logByDate, logByAttacker, logByAttacked, orders);
+                logByDate, logByAttacker, logByAttacked, orders, scanner);
         line = "7 123 1 test 100";
         orders = Main.getOrders(line);
         Main.makeChoice(adventures, advNameToId, fight,
-                logByDate, logByAttacker, logByAttacked, orders);
+                logByDate, logByAttacker, logByAttacked, orders, scanner);
         line = "11 123 1";
         orders = Main.getOrders(line);
         Main.makeChoice(adventures, advNameToId, fight,
-                logByDate, logByAttacker, logByAttacked, orders);
+                logByDate, logByAttacker, logByAttacked, orders, scanner);
         line = "13 123 test";
         orders = Main.getOrders(line);
         Main.makeChoice(adventures, advNameToId, fight,
-                logByDate, logByAttacker, logByAttacked, orders);
+                logByDate, logByAttacker, logByAttacked, orders, scanner);
         line = "7 123 1 test 100";
         orders = Main.getOrders(line);
         Main.makeChoice(adventures, advNameToId, fight,
-                logByDate, logByAttacker, logByAttacked, orders);
+                logByDate, logByAttacker, logByAttacked, orders, scanner);
         line = "8 123 1";
         orders = Main.getOrders(line);
         Main.makeChoice(adventures, advNameToId, fight,
-                logByDate, logByAttacker, logByAttacked, orders);
+                logByDate, logByAttacker, logByAttacked, orders, scanner);
         line = "15 2023/10";
         orders = Main.getOrders(line);
         Main.makeChoice(adventures, advNameToId, fight,
-                logByDate, logByAttacker, logByAttacked, orders);
+                logByDate, logByAttacker, logByAttacked, orders, scanner);
         line = "16 1";
         orders = Main.getOrders(line);
         Main.makeChoice(adventures, advNameToId, fight,
-                logByDate, logByAttacker, logByAttacked, orders);
+                logByDate, logByAttacker, logByAttacked, orders, scanner);
         line = "17 1";
         orders = Main.getOrders(line);
         Main.makeChoice(adventures, advNameToId, fight,
-                logByDate, logByAttacker, logByAttacked, orders);
+                logByDate, logByAttacker, logByAttacked, orders, scanner);
     }
 }

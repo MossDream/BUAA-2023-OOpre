@@ -207,7 +207,7 @@ public class Adventure {
             int attackedId = advNameToId.get(attackedName);
             Adventure attacked = advs.get(attackedId);
             attacked.setHp(attacked.getHp() - loseHp);
-            System.out.println(attacked.getId() + attacked.getHp());
+            System.out.println(attacked.getId() + " " + attacked.getHp());
             return true;
         } else {
             System.out.println("Fight log error");

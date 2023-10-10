@@ -98,7 +98,7 @@ public class Main {
                                       HashMap<String, ArrayList<String>> logByDate,
                                       HashMap<Integer, ArrayList<String>> logByAttacker,
                                       HashMap<Integer, ArrayList<String>> logByAttacked,
-                                      ArrayList<String> orders) {
+                                      ArrayList<String> orders, Scanner scanner) {
         int m = Integer.parseInt(orders.get(0));
         int k = Integer.parseInt(orders.get(1));
         for (int i = 0; i < m; i++) {
@@ -106,9 +106,8 @@ public class Main {
             fight.add(name);
         }
         System.out.println("Enter Fight Mode");
-        Scanner logScanner = new Scanner(System.in);
         for (int i = 0; i < k; i++) {
-            String log = logScanner.nextLine();
+            String log = scanner.nextLine();
             parseFightLog(advs, advNameToId,
                     fight, log, logByDate, logByAttacker, logByAttacked);
         }
@@ -246,7 +245,7 @@ public class Main {
                                   HashMap<String, ArrayList<String>> logByDate,
                                   HashMap<Integer, ArrayList<String>> logByAttacker,
                                   HashMap<Integer, ArrayList<String>> logByAttacked,
-                                  ArrayList<String> orders) {
+                                  ArrayList<String> orders, Scanner scanner) {
         int type = Integer.parseInt(orders.remove(0));
         switch (type) {
             case 1:
@@ -291,7 +290,7 @@ public class Main {
             case 14:
                 enterFightMode(advs, advNameToId,
                         fight, logByDate, logByAttacker, logByAttacked,
-                        orders);
+                        orders, scanner);
                 break;
             case 15:
                 searchByDate(logByDate, orders);
@@ -322,7 +321,7 @@ public class Main {
             makeChoice(advs, advNameToId,
                     fight,
                     logByDate, logByAttacker, logByAttacked,
-                    getOrders(nextLine));
+                    getOrders(nextLine), scanner);
         }
     }
 }

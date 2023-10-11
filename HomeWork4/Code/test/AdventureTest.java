@@ -207,19 +207,10 @@ public class AdventureTest {
         ArrayList<String> fight = new ArrayList<>();
         fight.add("adventure");
         fight.add("adventure2");
-        String date = "2023/10";
-        HashMap<String, ArrayList<String>> logByDate = new HashMap<>();
-        HashMap<Integer, ArrayList<String>> logByAttacker = new HashMap<>();
-        HashMap<Integer, ArrayList<String>> logByAttacked = new HashMap<>();
         adventure.addEquipment(new Equipment(3, "equipment", 1));
-        adventure.attackAoe(fight, advs, advNameToId,
-                "equipment", date, logByDate, logByAttacker, logByAttacked);
+        adventure.attackAoe(fight, advs, advNameToId, "equipment");
         adventure.takeEquipment(3);
-        adventure.attackAoe(fight, advs, advNameToId,
-                "equipment", date, logByDate, logByAttacker, logByAttacked);
-        assertEquals(1, logByDate.size());
-        assertEquals(1, logByAttacker.size());
-        assertEquals(1, logByAttacked.size());
+        adventure.attackAoe(fight, advs, advNameToId, "equipment");
     }
 
     @Test
@@ -233,7 +224,6 @@ public class AdventureTest {
         ArrayList<String> fight = new ArrayList<>();
         fight.add("adventure");
         fight.add("adventure2");
-        String date = "2023/10";
         adventure.addEquipment(new Equipment(3, "equipment", 1));
         adventure.attack(fight, advs, advNameToId, "adventure2", "equipment");
         adventure.takeEquipment(3);

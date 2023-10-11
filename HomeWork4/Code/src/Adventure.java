@@ -146,14 +146,10 @@ public class Adventure {
         return new PrintInfo(equipment.getStar(), equipment.getName());
     }
 
-    public void attackAoe(ArrayList<String> fight,
-                          HashMap<Integer, Adventure> advs,
-                          HashMap<String, Integer> advNameToId,
-                          String equName,
-                          String date,
-                          HashMap<String, ArrayList<String>> logByDate,
-                          HashMap<Integer, ArrayList<String>> logByAttacker,
-                          HashMap<Integer, ArrayList<String>> logByAttacked) {
+    public boolean attackAoe(ArrayList<String> fight,
+                             HashMap<Integer, Adventure> advs,
+                             HashMap<String, Integer> advNameToId,
+                             String equName) {
         if (fight.contains(name) && takenEquipments.containsKey(equName)) {
             Equipment equipment = takenEquipments.get(equName);
             int loseHp = equipment.getStar() * level;
@@ -163,36 +159,13 @@ public class Adventure {
                     Adventure attacked = advs.get(attackedId);
                     attacked.setHp(attacked.getHp() - loseHp);
                     System.out.print(attacked.getHp() + " ");
-                    //写被攻击者日志
-                    if (logByAttacked.containsKey(attackedId)) {
-                        logByAttacked.get(attackedId).add(date + " "
-                                + this.name + " AOE-attacked with " + equName);
-                    } else {
-                        ArrayList<String> arrayList = new ArrayList<>();
-                        arrayList.add(date + " " + this.name + " AOE-attacked with " + equName);
-                        logByAttacked.put(attackedId, arrayList);
-                    }
                 }
             }
             System.out.println();
-            //写日期日志和攻击者日志
-            if (logByDate.containsKey(date)) {
-                logByDate.get(date).add(this.name + " AOE-attacked with " + equName);
-            } else {
-                ArrayList<String> arrayList = new ArrayList<>();
-                arrayList.add(this.name + " AOE-attacked with " + equName);
-                logByDate.put(date, arrayList);
-            }
-            if (logByAttacker.containsKey(this.id)) {
-                logByAttacker.get(this.id).add(date + " "
-                        + this.name + " AOE-attacked with " + equName);
-            } else {
-                ArrayList<String> arrayList = new ArrayList<>();
-                arrayList.add(date + " " + this.name + " AOE-attacked with " + equName);
-                logByAttacker.put(this.id, arrayList);
-            }
+            return true;
         } else {
             System.out.println("Fight log error");
+            return false;
         }
     }
 
@@ -201,7 +174,8 @@ public class Adventure {
                           HashMap<String, Integer> advNameToId,
                           String attackedName,
                           String equName) {
-        if (fight.contains(name) && takenEquipments.containsKey(equName)) {
+        if (fight.contains(name) && fight.contains(attackedName) &&
+                takenEquipments.containsKey(equName)) {
             Equipment equipment = takenEquipments.get(equName);
             int loseHp = equipment.getStar() * level;
             int attackedId = advNameToId.get(attackedName);

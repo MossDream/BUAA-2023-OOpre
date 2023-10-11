@@ -2,18 +2,47 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
+import java.util.function.Consumer;
 
 public class Main {
-    public static void addAdventure(HashMap<Integer, Adventure> advs,
-                                    HashMap<String, Integer> advNameToId,
-                                    ArrayList<String> orders) {
+    private static HashMap<Integer, Adventure> advs = new HashMap<>();
+    private static ArrayList<String> fight = new ArrayList<>();
+    private static HashMap<String, Integer> advNameToId = new HashMap<>();
+    private static HashMap<String, ArrayList<String>> logByDate = new HashMap<>();
+    private static HashMap<Integer, ArrayList<String>> logByAttacker = new HashMap<>();
+    private static HashMap<Integer, ArrayList<String>> logByAttacked = new HashMap<>();
+    private static Scanner scanner = new Scanner(System.in);
+
+    private static HashMap<Integer, Consumer<ArrayList<String>>> actionsMap = new HashMap<>();
+
+    public static void addAction() {
+        actionsMap.put(1, Main::addAdventure);
+        actionsMap.put(2, Main::addBottle);
+        actionsMap.put(3, Main::removeBottle);
+        actionsMap.put(4, Main::addEquipment);
+        actionsMap.put(5, Main::removeEquipment);
+        actionsMap.put(6, Main::increaseStar);
+        actionsMap.put(7, Main::addFood);
+        actionsMap.put(8, Main::removeFood);
+        actionsMap.put(9, Main::takeEquipment);
+        actionsMap.put(10, Main::takeBottle);
+        actionsMap.put(11, Main::takeFood);
+        actionsMap.put(12, Main::useBottle);
+        actionsMap.put(13, Main::eatFood);
+        actionsMap.put(14, Main::enterFightMode);
+        actionsMap.put(15, Main::searchByDate);
+        actionsMap.put(16, Main::searchByAttacker);
+        actionsMap.put(17, Main::searchByAttacked);
+    }
+
+    public static void addAdventure(ArrayList<String> orders) {
         int advId = Integer.parseInt(orders.get(0));
         String name = orders.get(1);
         advs.put(advId, new Adventure(advId, name));
         advNameToId.put(name, advId);
     }
 
-    public static void addBottle(HashMap<Integer, Adventure> advs, ArrayList<String> orders) {
+    public static void addBottle(ArrayList<String> orders) {
         int advId = Integer.parseInt(orders.get(0));
         int botId = Integer.parseInt(orders.get(1));
         String name = orders.get(2);
@@ -21,13 +50,13 @@ public class Main {
         advs.get(advId).addBottle(new Bottle(botId, name, capacity));
     }
 
-    public static void removeBottle(HashMap<Integer, Adventure> advs, ArrayList<String> orders) {
+    public static void removeBottle(ArrayList<String> orders) {
         int advId = Integer.parseInt(orders.get(0));
         int botId = Integer.parseInt(orders.get(1));
         advs.get(advId).removeBottle(botId).printIntFirst();
     }
 
-    public static void addEquipment(HashMap<Integer, Adventure> advs, ArrayList<String> orders) {
+    public static void addEquipment(ArrayList<String> orders) {
         int advId = Integer.parseInt(orders.get(0));
         int equipId = Integer.parseInt(orders.get(1));
         String name = orders.get(2);
@@ -36,19 +65,19 @@ public class Main {
         adventure.addEquipment(new Equipment(equipId, name, star));
     }
 
-    public static void removeEquipment(HashMap<Integer, Adventure> advs, ArrayList<String> orders) {
+    public static void removeEquipment(ArrayList<String> orders) {
         int advId = Integer.parseInt(orders.get(0));
         int equipId = Integer.parseInt(orders.get(1));
         advs.get(advId).removeEquipment(equipId).printIntFirst();
     }
 
-    public static void increaseStar(HashMap<Integer, Adventure> advs, ArrayList<String> orders) {
+    public static void increaseStar(ArrayList<String> orders) {
         int advId = Integer.parseInt(orders.get(0));
         int equipId = Integer.parseInt(orders.get(1));
         advs.get(advId).increaseStar(equipId).printStringFirst();
     }
 
-    public static void addFood(HashMap<Integer, Adventure> advs, ArrayList<String> orders) {
+    public static void addFood(ArrayList<String> orders) {
         int advId = Integer.parseInt(orders.get(0));
         int foodId = Integer.parseInt(orders.get(1));
         String name = orders.get(2);
@@ -56,49 +85,43 @@ public class Main {
         advs.get(advId).addFood(new Food(foodId, name, energy));
     }
 
-    public static void removeFood(HashMap<Integer, Adventure> advs, ArrayList<String> orders) {
+    public static void removeFood(ArrayList<String> orders) {
         int advId = Integer.parseInt(orders.get(0));
         int foodId = Integer.parseInt(orders.get(1));
         advs.get(advId).removeFood(foodId).printIntFirst();
     }
 
-    public static void takeEquipment(HashMap<Integer, Adventure> advs, ArrayList<String> orders) {
+    public static void takeEquipment(ArrayList<String> orders) {
         int advId = Integer.parseInt(orders.get(0));
         int equipId = Integer.parseInt(orders.get(1));
         advs.get(advId).takeEquipment(equipId);
     }
 
-    public static void takeBottle(HashMap<Integer, Adventure> advs, ArrayList<String> orders) {
+    public static void takeBottle(ArrayList<String> orders) {
         int advId = Integer.parseInt(orders.get(0));
         int botId = Integer.parseInt(orders.get(1));
         advs.get(advId).takeBottle(botId);
     }
 
-    public static void takeFood(HashMap<Integer, Adventure> advs, ArrayList<String> orders) {
+    public static void takeFood(ArrayList<String> orders) {
         int advId = Integer.parseInt(orders.get(0));
         int foodId = Integer.parseInt(orders.get(1));
         advs.get(advId).takeFood(foodId);
     }
 
-    public static void useBottle(HashMap<Integer, Adventure> advs, ArrayList<String> orders) {
+    public static void useBottle(ArrayList<String> orders) {
         int advId = Integer.parseInt(orders.get(0));
         String name = orders.get(1);
         advs.get(advId).useBottle(false, name);
     }
 
-    public static void eatFood(HashMap<Integer, Adventure> advs, ArrayList<String> orders) {
+    public static void eatFood(ArrayList<String> orders) {
         int advId = Integer.parseInt(orders.get(0));
         String name = orders.get(1);
         advs.get(advId).eatFood(name);
     }
 
-    public static void enterFightMode(HashMap<Integer, Adventure> advs,
-                                      HashMap<String, Integer> advNameToId,
-                                      ArrayList<String> fight,
-                                      HashMap<String, ArrayList<String>> logByDate,
-                                      HashMap<Integer, ArrayList<String>> logByAttacker,
-                                      HashMap<Integer, ArrayList<String>> logByAttacked,
-                                      ArrayList<String> orders, Scanner scanner) {
+    public static void enterFightMode(ArrayList<String> orders) {
         int m = Integer.parseInt(orders.get(0));
         int k = Integer.parseInt(orders.get(1));
         for (int i = 0; i < m; i++) {
@@ -108,48 +131,115 @@ public class Main {
         System.out.println("Enter Fight Mode");
         for (int i = 0; i < k; i++) {
             String log = scanner.nextLine();
-            parseFightLog(advs, advNameToId,
-                    fight, log, logByDate, logByAttacker, logByAttacked);
+            parseFightLog(log);
         }
         fight.clear();
     }
 
-    public static void writeAttackLog(HashMap<Integer, ArrayList<String>> log,
-                                      String date,
-                                      int key,
-                                      String attackerName,
-                                      String attackedName,
-                                      String equName) {
+    public static void writeDateLog(int type, String date,
+                                    String userName, String botName,
+                                    String attackerName, String attackedName, String equName) {
+        if (type == 1) {
+            //战斗日志类型是：某人使用药水
+            if (logByDate.containsKey(date)) {
+                logByDate.get(date).add(userName + " used " + botName);
+            } else {
+                ArrayList<String> arrayList = new ArrayList<>();
+                arrayList.add(userName + " used " + botName);
+                logByDate.put(date, arrayList);
+            }
+        } else if (type == 2) {
+            //战斗日志类型是：某人进行单个攻击
+            if (logByDate.containsKey(date)) {
+                logByDate.get(date).add(attackerName +
+                        " attacked " + attackedName + " with " + equName);
+            } else {
+                ArrayList<String> arrayList = new ArrayList<>();
+                arrayList.add(attackerName + " attacked " + attackedName + " with " + equName);
+                logByDate.put(date, arrayList);
+            }
+        } else if (type == 3) {
+            //战斗日志类型是：某人进行AOE攻击
+            if (logByDate.containsKey(date)) {
+                logByDate.get(date).add(attackerName + " AOE-attacked with " + equName);
+            } else {
+                ArrayList<String> arrayList = new ArrayList<>();
+                arrayList.add(attackerName + " AOE-attacked with " + equName);
+                logByDate.put(date, arrayList);
+            }
+        }
+    }
+
+    public static void writeAttack(HashMap<Integer, ArrayList<String>> log, int key,
+                                   String date,
+                                   String attackerName, String attackedName, String equName) {
         if (log.containsKey(key)) {
-            log.get(key).add(date + " " + attackerName +
-                    " attacked " + attackedName
-                    + " with " + equName);
+            log.get(key).add(date + " "
+                    + attackerName + " attacked " + attackedName + " with " + equName);
         } else {
             ArrayList<String> arrayList = new ArrayList<>();
-            arrayList.add(date + " " + attackerName +
-                    " attacked " + attackedName
-                    + " with " + equName);
+            arrayList.add(date + " "
+                    + attackerName + " attacked " + attackedName + " with " + equName);
             log.put(key, arrayList);
         }
     }
 
-    public static void parseFightLog(HashMap<Integer, Adventure> advs,
-                                     HashMap<String, Integer> advNameToId,
-                                     ArrayList<String> fight,
-                                     String log,
-                                     HashMap<String, ArrayList<String>> logByDate,
-                                     HashMap<Integer, ArrayList<String>> logByAttacker,
-                                     HashMap<Integer, ArrayList<String>> logByAttacked) {
+    public static void writeAttackAoe(HashMap<Integer, ArrayList<String>> log, int key,
+                                      String date, String attackerName, String equName) {
+        if (log.containsKey(key)) {
+            log.get(key).add(date + " "
+                    + attackerName + " AOE-attacked with " + equName);
+        } else {
+            ArrayList<String> arrayList = new ArrayList<>();
+            arrayList.add(date + " "
+                    + attackerName + " AOE-attacked with " + equName);
+            log.put(key, arrayList);
+        }
+    }
+
+    public static void writeAttackerLog(int type, String date,
+                                        String attackerName, String attackedName, String equName) {
+        int attackerId = advNameToId.get(attackerName);
+        if (type == 1) {
+            //战斗类型是，某人进行单个攻击
+            writeAttack(logByAttacker, attackerId, date, attackerName, attackedName, equName);
+        } else if (type == 2) {
+            //战斗类型是，某人进行AOE攻击
+            writeAttackAoe(logByAttacker, attackerId, date, attackerName, equName);
+        }
+    }
+
+    public static void writeAttackedLog(int type, String date,
+                                        String attackerName, String attackedName, String equName) {
+        if (type == 1) {
+            //战斗类型是，某人进行单个攻击
+            int attackedId = advNameToId.get(attackedName);
+            writeAttack(logByAttacked, attackedId, date, attackerName, attackedName, equName);
+        } else if (type == 2) {
+            //战斗类型是，某人进行AOE攻击:
+            for (String name : fight) {
+                if (!name.equals(attackerName)) {
+                    int attackedId = advNameToId.get(name);
+                    writeAttackAoe(logByAttacked, attackedId, date, attackerName, equName);
+                }
+            }
+        }
+    }
+
+    public static void parseFightLog(String log) {
         String[] strings = log.trim().split("-");
         if (strings[1].contains("@#")) {
             String[] strings1 = strings[1].split("@#");
+            String date = strings[0].trim();
+            String attackerName = strings1[0].trim();
             String equName = strings[2].trim();
-            int attackerId = advNameToId.get(strings1[0].trim());
-            //写日志的动作包含在attackAoe中
-            advs.get(attackerId).attackAoe(fight,
-                    advs, advNameToId,
-                    equName, strings[0].trim(),
-                    logByDate, logByAttacker, logByAttacked);
+            int attackerId = advNameToId.get(attackerName);
+            boolean isSuccess = advs.get(attackerId).attackAoe(fight, advs, advNameToId, equName);
+            if (isSuccess) {
+                writeDateLog(3, date, null, null, attackerName, null, equName);
+                writeAttackerLog(2, date, attackerName, null, equName);
+                writeAttackedLog(2, date, attackerName, null, equName);
+            }
         } else if (strings[1].contains("@")) {
             String[] strings1 = strings[1].split("@");
             String equName = strings[2].trim();
@@ -159,38 +249,20 @@ public class Main {
             int attackerId = advNameToId.get(attackerName);
             boolean isSuccess = advs.get(attackerId).attack(fight, advs, advNameToId,
                     attackedName, equName);
-            //单独写日志，写日期日志、攻击者日志和被攻击者日志
             if (isSuccess) {
-                if (logByDate.containsKey(date)) {
-                    logByDate.get(date).add(attackerName +
-                            " attacked " + attackedName
-                            + " with " + equName);
-                } else {
-                    ArrayList<String> arrayList = new ArrayList<>();
-                    arrayList.add(attackerName + " attacked " + attackedName + " with " + equName);
-                    logByDate.put(date, arrayList);
-                }
-                writeAttackLog(logByAttacker,
-                        date, attackerId, attackerName, attackedName, equName);
-                int attackedId = advNameToId.get(attackedName);
-                writeAttackLog(logByAttacked,
-                        date, attackedId, attackerName, attackedName, equName);
+                writeDateLog(2, date, null, null, attackerName, attackedName, equName);
+                writeAttackerLog(1, date, attackerName, attackedName, equName);
+                writeAttackedLog(1, date, attackerName, attackedName, equName);
             }
         } else {
+            String date = strings[0].trim();
+            String userName = strings[1].trim();
             String botName = strings[2].trim();
-            if (fight.contains(strings[1].trim())) {
-                int userId = advNameToId.get(strings[1].trim());
+            if (fight.contains(userName)) {
+                int userId = advNameToId.get(userName);
                 boolean isSuccess = advs.get(userId).useBottle(true, botName);
                 if (isSuccess) {
-                    //单独写日志,只写日期日志
-                    if (logByDate.containsKey(strings[0].trim())) {
-                        logByDate.get(strings[0].trim()).add(strings[1].trim()
-                                + " used " + botName);
-                    } else {
-                        ArrayList<String> arrayList = new ArrayList<>();
-                        arrayList.add(strings[1].trim() + " used " + botName);
-                        logByDate.put(strings[0].trim(), arrayList);
-                    }
+                    writeDateLog(1, date, userName, botName, null, null, null);
                 }
             } else {
                 System.out.println("Fight log error");
@@ -198,8 +270,7 @@ public class Main {
         }
     }
 
-    public static void searchByDate(HashMap<String, ArrayList<String>> logByDate,
-                                    ArrayList<String> orders) {
+    public static void searchByDate(ArrayList<String> orders) {
         String date = orders.get(0);
         if (logByDate.containsKey(date)) {
             for (String log : logByDate.get(date)) {
@@ -210,8 +281,7 @@ public class Main {
         }
     }
 
-    public static void searchByAttacker(HashMap<Integer, ArrayList<String>> logByAttacker,
-                                        ArrayList<String> orders) {
+    public static void searchByAttacker(ArrayList<String> orders) {
         int advId = Integer.parseInt(orders.get(0));
         if (logByAttacker.containsKey(advId)) {
             for (String log : logByAttacker.get(advId)) {
@@ -222,8 +292,7 @@ public class Main {
         }
     }
 
-    public static void searchByAttacked(HashMap<Integer, ArrayList<String>> logByAttacked,
-                                        ArrayList<String> orders) {
+    public static void searchByAttacked(ArrayList<String> orders) {
         int advId = Integer.parseInt(orders.get(0));
         if (logByAttacked.containsKey(advId)) {
             for (String log : logByAttacked.get(advId)) {
@@ -239,89 +308,18 @@ public class Main {
         return new ArrayList<>(Arrays.asList(strings));
     }
 
-    public static void makeChoice(HashMap<Integer, Adventure> advs,
-                                  HashMap<String, Integer> advNameToId,
-                                  ArrayList<String> fight,
-                                  HashMap<String, ArrayList<String>> logByDate,
-                                  HashMap<Integer, ArrayList<String>> logByAttacker,
-                                  HashMap<Integer, ArrayList<String>> logByAttacked,
-                                  ArrayList<String> orders, Scanner scanner) {
+    public static void makeChoice(ArrayList<String> orders) {
         int type = Integer.parseInt(orders.remove(0));
-        switch (type) {
-            case 1:
-                addAdventure(advs, advNameToId, orders);
-                break;
-            case 2:
-                addBottle(advs, orders);
-                break;
-            case 3:
-                removeBottle(advs, orders);
-                break;
-            case 4:
-                addEquipment(advs, orders);
-                break;
-            case 5:
-                removeEquipment(advs, orders);
-                break;
-            case 6:
-                increaseStar(advs, orders);
-                break;
-            case 7:
-                addFood(advs, orders);
-                break;
-            case 8:
-                removeFood(advs, orders);
-                break;
-            case 9:
-                takeEquipment(advs, orders);
-                break;
-            case 10:
-                takeBottle(advs, orders);
-                break;
-            case 11:
-                takeFood(advs, orders);
-                break;
-            case 12:
-                useBottle(advs, orders);
-                break;
-            case 13:
-                eatFood(advs, orders);
-                break;
-            case 14:
-                enterFightMode(advs, advNameToId,
-                        fight, logByDate, logByAttacker, logByAttacked,
-                        orders, scanner);
-                break;
-            case 15:
-                searchByDate(logByDate, orders);
-                break;
-            case 16:
-                searchByAttacker(logByAttacker, orders);
-                break;
-            case 17:
-                searchByAttacked(logByAttacked, orders);
-                break;
-            default:
-                break;
-        }
+        actionsMap.get(type).accept(orders);
     }
 
     public static void main(String[] args) {
+        addAction();
         int n;
-        HashMap<Integer, Adventure> advs = new HashMap<>();
-        ArrayList<String> fight = new ArrayList<>();
-        HashMap<String, Integer> advNameToId = new HashMap<>();
-        HashMap<String, ArrayList<String>> logByDate = new HashMap<>();
-        HashMap<Integer, ArrayList<String>> logByAttacker = new HashMap<>();
-        HashMap<Integer, ArrayList<String>> logByAttacked = new HashMap<>();
-        Scanner scanner = new Scanner(System.in);
         n = Integer.parseInt(scanner.nextLine().trim());
         for (int i = 0; i < n; i++) {
             String nextLine = scanner.nextLine();
-            makeChoice(advs, advNameToId,
-                    fight,
-                    logByDate, logByAttacker, logByAttacked,
-                    getOrders(nextLine), scanner);
+            makeChoice(getOrders(nextLine));
         }
     }
 }

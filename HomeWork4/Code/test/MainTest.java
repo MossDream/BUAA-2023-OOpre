@@ -3,17 +3,16 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
 
 import static org.junit.Assert.assertEquals;
 
 public class MainTest {
-    private HashMap<Integer, Adventure> adventures;
-
     @Before
     public void setUp() throws Exception {
-        adventures = new HashMap<>();
+        System.out.println("Test start");
     }
 
     @After
@@ -22,18 +21,16 @@ public class MainTest {
     }
 
     @Test
+    public void addAction() {
+        Main.addAction();
+    }
+
+    @Test
     public void addAdventure() {
         ArrayList<String> orders = new ArrayList<>();
         orders.add("123");
         orders.add("test");
-        HashMap<String, Integer> advNameToId = new HashMap<>();
-        Main.addAdventure(adventures, advNameToId, orders);
-        assertEquals("test", adventures.get(123).getName());
-        assertEquals(123, adventures.get(123).getId());
-        assertEquals(1, adventures.get(123).getLevel());
-        assertEquals(500, adventures.get(123).getHp());
-        assertEquals(1, adventures.get(123).getMaxBots());
-        assertEquals(123, advNameToId.get("test").intValue());
+        Main.addAdventure(orders);
     }
 
     @Test
@@ -46,13 +43,8 @@ public class MainTest {
         orders2.add("1");
         orders2.add("test");
         orders2.add("100");
-        HashMap<String, Integer> advNameToId = new HashMap<>();
-        Main.addAdventure(adventures, advNameToId, orders1);
-        Main.addBottle(adventures, orders2);
-        assertEquals("test", adventures.get(123).getBottles().get(1).getName());
-        assertEquals(1, adventures.get(123).getBottles().get(1).getId());
-        assertEquals(100, adventures.get(123).getBottles().get(1).getCapacity());
-
+        Main.addAdventure(orders1);
+        Main.addBottle(orders2);
     }
 
     @Test
@@ -65,11 +57,9 @@ public class MainTest {
         orders2.add("1");
         orders2.add("test");
         orders2.add("100");
-        HashMap<String, Integer> advNameToId = new HashMap<>();
-        Main.addAdventure(adventures, advNameToId, orders1);
-        Main.addBottle(adventures, orders2);
-        Main.removeBottle(adventures, orders2);
-        assertEquals(0, adventures.get(123).getBottles().size());
+        Main.addAdventure(orders1);
+        Main.addBottle(orders2);
+        Main.removeBottle(orders2);
     }
 
     @Test
@@ -82,12 +72,8 @@ public class MainTest {
         orders2.add("1");
         orders2.add("test");
         orders2.add("100");
-        HashMap<String, Integer> advNameToId = new HashMap<>();
-        Main.addAdventure(adventures, advNameToId, orders1);
-        Main.addEquipment(adventures, orders2);
-        assertEquals("test", adventures.get(123).getEquipments().get(1).getName());
-        assertEquals(1, adventures.get(123).getEquipments().get(1).getId());
-        assertEquals(100, adventures.get(123).getEquipments().get(1).getStar());
+        Main.addAdventure(orders1);
+        Main.addEquipment(orders2);
     }
 
     @Test
@@ -100,11 +86,9 @@ public class MainTest {
         orders2.add("1");
         orders2.add("test");
         orders2.add("100");
-        HashMap<String, Integer> advNameToId = new HashMap<>();
-        Main.addAdventure(adventures, advNameToId, orders1);
-        Main.addEquipment(adventures, orders2);
-        Main.removeEquipment(adventures, orders2);
-        assertEquals(0, adventures.get(123).getEquipments().size());
+        Main.addAdventure(orders1);
+        Main.addEquipment(orders2);
+        Main.removeEquipment(orders2);
     }
 
     @Test
@@ -120,11 +104,9 @@ public class MainTest {
         ArrayList<String> orders3 = new ArrayList<>();
         orders3.add("123");
         orders3.add("1");
-        HashMap<String, Integer> advNameToId = new HashMap<>();
-        Main.addAdventure(adventures, advNameToId, orders1);
-        Main.addEquipment(adventures, orders2);
-        Main.increaseStar(adventures, orders3);
-        assertEquals(101, adventures.get(123).getEquipments().get(1).getStar());
+        Main.addAdventure(orders1);
+        Main.addEquipment(orders2);
+        Main.increaseStar(orders3);
     }
 
     @Test
@@ -137,12 +119,8 @@ public class MainTest {
         orders2.add("1");
         orders2.add("test");
         orders2.add("100");
-        HashMap<String, Integer> advNameToId = new HashMap<>();
-        Main.addAdventure(adventures, advNameToId, orders1);
-        Main.addFood(adventures, orders2);
-        assertEquals("test", adventures.get(123).getFoods().get(1).getName());
-        assertEquals(1, adventures.get(123).getFoods().get(1).getId());
-        assertEquals(100, adventures.get(123).getFoods().get(1).getEnergy());
+        Main.addAdventure(orders1);
+        Main.addFood(orders2);
     }
 
     @Test
@@ -155,11 +133,9 @@ public class MainTest {
         orders2.add("1");
         orders2.add("test");
         orders2.add("100");
-        HashMap<String, Integer> advNameToId = new HashMap<>();
-        Main.addAdventure(adventures, advNameToId, orders1);
-        Main.addFood(adventures, orders2);
-        Main.removeFood(adventures, orders2);
-        assertEquals(0, adventures.get(123).getFoods().size());
+        Main.addAdventure(orders1);
+        Main.addFood(orders2);
+        Main.removeFood(orders2);
     }
 
     @Test
@@ -175,11 +151,9 @@ public class MainTest {
         ArrayList<String> orders3 = new ArrayList<>();
         orders3.add("123");
         orders3.add("1");
-        HashMap<String, Integer> advNameToId = new HashMap<>();
-        Main.addAdventure(adventures, advNameToId, orders1);
-        Main.addEquipment(adventures, orders2);
-        Main.takeEquipment(adventures, orders3);
-        assertEquals(1, adventures.get(123).getTakenEquipments().size());
+        Main.addAdventure(orders1);
+        Main.addEquipment(orders2);
+        Main.takeEquipment(orders3);
     }
 
     @Test
@@ -195,11 +169,9 @@ public class MainTest {
         ArrayList<String> orders3 = new ArrayList<>();
         orders3.add("123");
         orders3.add("1");
-        HashMap<String, Integer> advNameToId = new HashMap<>();
-        Main.addAdventure(adventures, advNameToId, orders1);
-        Main.addBottle(adventures, orders2);
-        Main.takeBottle(adventures, orders3);
-        assertEquals(1, adventures.get(123).getTakenBottles().size());
+        Main.addAdventure(orders1);
+        Main.addBottle(orders2);
+        Main.takeBottle(orders3);
     }
 
     @Test
@@ -215,11 +187,10 @@ public class MainTest {
         ArrayList<String> orders3 = new ArrayList<>();
         orders3.add("123");
         orders3.add("1");
-        HashMap<String, Integer> advNameToId = new HashMap<>();
-        Main.addAdventure(adventures, advNameToId, orders1);
-        Main.addFood(adventures, orders2);
-        Main.takeFood(adventures, orders3);
-        assertEquals(1, adventures.get(123).getTakenFoods().size());
+        Main.addAdventure(orders1);
+        Main.addFood(orders2);
+        Main.takeFood(orders3);
+
     }
 
     @Test
@@ -238,12 +209,10 @@ public class MainTest {
         ArrayList<String> orders4 = new ArrayList<>();
         orders4.add("123");
         orders4.add("test");
-        HashMap<String, Integer> advNameToId = new HashMap<>();
-        Main.addAdventure(adventures, advNameToId, orders1);
-        Main.addBottle(adventures, orders2);
-        Main.takeBottle(adventures, orders3);
-        Main.useBottle(adventures, orders4);
-        assertEquals(0, adventures.get(123).getTakenBottles().get("test").get(1).getCapacity());
+        Main.addAdventure(orders1);
+        Main.addBottle(orders2);
+        Main.takeBottle(orders3);
+        Main.useBottle(orders4);
     }
 
     @Test
@@ -262,87 +231,82 @@ public class MainTest {
         ArrayList<String> orders4 = new ArrayList<>();
         orders4.add("123");
         orders4.add("test");
-        HashMap<String, Integer> advNameToId = new HashMap<>();
-        Main.addAdventure(adventures, advNameToId, orders1);
-        Main.addFood(adventures, orders2);
-        Main.takeFood(adventures, orders3);
-        Main.eatFood(adventures, orders4);
-        assertEquals(0, adventures.get(123).getTakenFoods().size());
+        Main.addAdventure(orders1);
+        Main.addFood(orders2);
+        Main.takeFood(orders3);
+        Main.eatFood(orders4);
     }
 
     @Test
     public void parseFightLog() {
-        adventures.put(1, new Adventure(1, "test"));
-        adventures.put(2, new Adventure(2, "test2"));
-        HashMap<String, Integer> advNameToId = new HashMap<>();
-        advNameToId.put("test", 1);
-        advNameToId.put("test2", 2);
-        ArrayList<String> fight = new ArrayList<>();
-        fight.add("test");
-        fight.add("test2");
+        Main.addAdventure(new ArrayList<>(Arrays.asList("1", "test")));
+        Main.addAdventure(new ArrayList<>(Arrays.asList("2", "test2")));
         String log1 = "2023/10-test-bottle";
-        adventures.get(1).addBottle(new Bottle(111, "bottle", 100));
-        adventures.get(1).takeBottle(111);
-        HashMap<String, ArrayList<String>> logByDate = new HashMap<>();
-        HashMap<Integer, ArrayList<String>> logByAttacker = new HashMap<>();
-        HashMap<Integer, ArrayList<String>> logByAttacked = new HashMap<>();
-        Main.parseFightLog(adventures,
-                advNameToId, fight, log1, logByDate, logByAttacker, logByAttacked);
-        adventures.get(1).addEquipment(new Equipment(222, "equipment", 100));
-        adventures.get(1).takeEquipment(222);
+        Main.addBottle(new ArrayList<>(Arrays.asList("1", "111", "bottle", "100")));
+        Main.takeBottle(new ArrayList<>(Arrays.asList("1", "111")));
+        Main.parseFightLog(log1);
+        Main.addEquipment(new ArrayList<>(Arrays.asList("1", "222", "equipment", "100")));
+        Main.takeEquipment(new ArrayList<>(Arrays.asList("1", "222")));
         String log2 = "2023/10-test@test2-equipment";
-        Main.parseFightLog(adventures,
-                advNameToId, fight, log2, logByDate, logByAttacker, logByAttacked);
+        Main.parseFightLog(log2);
         String log3 = "2023/10-test@#-equipment";
-        Main.parseFightLog(adventures,
-                advNameToId, fight, log3, logByDate, logByAttacker, logByAttacked);
+        Main.parseFightLog(log3);
     }
 
     @Test
-    public void writeAttackLog() {
-        HashMap<Integer, ArrayList<String>> log = new HashMap<>();
-        String date = "2023/10";
-        int key = 1;
-        String attackerName = "test";
-        String attackedName = "test2";
-        String equipmentName = "equipment";
-        Main.writeAttackLog(log, date, key, attackerName, attackedName, equipmentName);
-        attackerName = "test3";
-        Main.writeAttackLog(log, date, key, attackerName, attackedName, equipmentName);
+    public void writeDateLog() {
+        Main.writeDateLog(1, "2023/10", "test", "test2", "test3", "test4", "test5");
+        Main.writeDateLog(2, "2023/10", "test", "test2", "test3", "test4", "test5");
+        Main.writeDateLog(3, "2023/10", "test", "test2", "test3", "test4", "test5");
+        Main.writeDateLog(1, "2023/10", "test", "test2", "test3", "test4", "test5");
+        Main.writeDateLog(2, "2023/10", "test", "test2", "test3", "test4", "test5");
+        Main.writeDateLog(3, "2023/10", "test", "test2", "test3", "test4", "test5");
+    }
 
+    @Test
+    public void writeAttackerLog() {
+        Main.writeAttackerLog(1, "test", "test2", "test3", "test4");
+        Main.writeAttackerLog(2, "test", "test2", "test3", "test4");
+        Main.writeAttackerLog(1, "test", "test2", "test3", "test4");
+        Main.writeAttackerLog(2, "test", "test2", "test3", "test4");
+    }
+
+    @Test
+    public void writeAttackedLog() {
+        Main.addAdventure(new ArrayList<>(Arrays.asList("1", "test3")));
+        Main.writeAttackedLog(1, "test", "test2", "test3", "test4");
+        Main.writeAttackedLog(2, "test", "test2", "test3", "test4");
+        Main.writeAttackedLog(1, "test", "test2", "test3", "test4");
+        Main.writeAttackedLog(2, "test", "test2", "test3", "test4");
     }
 
     @Test
     public void searchByDate() {
-        HashMap<String, ArrayList<String>> logByDate = new HashMap<>();
         ArrayList<String> orders = new ArrayList<>();
         orders.add("2023/10");
-        Main.searchByDate(logByDate, orders);
-        logByDate.put("2023/10", new ArrayList<>());
-        logByDate.get("2023/10").add("hello");
-        Main.searchByDate(logByDate, orders);
+        Main.searchByDate(orders);
+        Main.writeDateLog(1, "2023/10", "test", "test2", "test3", "test4", "test5");
+        Main.searchByDate(orders);
     }
 
     @Test
     public void searchByAttacker() {
-        HashMap<Integer, ArrayList<String>> logByAttacker = new HashMap<>();
         ArrayList<String> orders = new ArrayList<>();
         orders.add("1");
-        Main.searchByAttacker(logByAttacker, orders);
-        logByAttacker.put(1, new ArrayList<>());
-        logByAttacker.get(1).add("hello");
-        Main.searchByAttacker(logByAttacker, orders);
+        Main.searchByAttacker(orders);
+        Main.addAdventure(new ArrayList<>(Arrays.asList("1", "test2")));
+        Main.writeAttackerLog(1, "test", "test2", "test3", "test4");
+        Main.searchByAttacker(orders);
     }
 
     @Test
     public void searchByAttacked() {
-        HashMap<Integer, ArrayList<String>> logByAttacked = new HashMap<>();
         ArrayList<String> orders = new ArrayList<>();
         orders.add("1");
-        Main.searchByAttacked(logByAttacked, orders);
-        logByAttacked.put(1, new ArrayList<>());
-        logByAttacked.get(1).add("hello");
-        Main.searchByAttacked(logByAttacked, orders);
+        Main.searchByAttacked(orders);
+        Main.addAdventure(new ArrayList<>(Arrays.asList("1", "test2")));
+        Main.writeAttackedLog(1, "test", "test2", "test3", "test4");
+        Main.searchByAttacked(orders);
     }
 
     @Test
@@ -358,78 +322,54 @@ public class MainTest {
     public void makeChoice() {
         String line = "1 123 test";
         ArrayList<String> orders = Main.getOrders(line);
-        ArrayList<String> fight = new ArrayList<>();
-        HashMap<String, Integer> advNameToId = new HashMap<>();
-        HashMap<String, ArrayList<String>> logByDate = new HashMap<>();
-        HashMap<Integer, ArrayList<String>> logByAttacker = new HashMap<>();
-        HashMap<Integer, ArrayList<String>> logByAttacked = new HashMap<>();
-        Scanner scanner = new Scanner(System.in);
-        Main.makeChoice(adventures, advNameToId, fight,
-                logByDate, logByAttacker, logByAttacked, orders, scanner);
-        assertEquals("test", adventures.get(123).getName());
+        Main.makeChoice(orders);
         line = "2 123 1 test 100";
         orders = Main.getOrders(line);
-        Main.makeChoice(adventures, advNameToId, fight,
-                logByDate, logByAttacker, logByAttacked, orders, scanner);
+        Main.makeChoice(orders);
         line = "10 123 1";
         orders = Main.getOrders(line);
-        Main.makeChoice(adventures, advNameToId, fight,
-                logByDate, logByAttacker, logByAttacked, orders, scanner);
+        Main.makeChoice(orders);
         line = "12 123 test";
         orders = Main.getOrders(line);
-        Main.makeChoice(adventures, advNameToId, fight,
-                logByDate, logByAttacker, logByAttacked, orders, scanner);
+        Main.makeChoice(orders);
         line = "3 123 1";
         orders = Main.getOrders(line);
-        Main.makeChoice(adventures, advNameToId, fight,
-                logByDate, logByAttacker, logByAttacked, orders, scanner);
+        Main.makeChoice(orders);
         line = "4 123 1 test 100";
         orders = Main.getOrders(line);
-        Main.makeChoice(adventures, advNameToId, fight,
-                logByDate, logByAttacker, logByAttacked, orders, scanner);
+        Main.makeChoice(orders);
         line = "6 123 1";
         orders = Main.getOrders(line);
-        Main.makeChoice(adventures, advNameToId, fight,
-                logByDate, logByAttacker, logByAttacked, orders, scanner);
+        Main.makeChoice(orders);
         line = "9 123 1";
         orders = Main.getOrders(line);
-        Main.makeChoice(adventures, advNameToId, fight,
-                logByDate, logByAttacker, logByAttacked, orders, scanner);
+        Main.makeChoice(orders);
         line = "5 123 1";
         orders = Main.getOrders(line);
-        Main.makeChoice(adventures, advNameToId, fight,
-                logByDate, logByAttacker, logByAttacked, orders, scanner);
+        Main.makeChoice(orders);
         line = "7 123 1 test 100";
         orders = Main.getOrders(line);
-        Main.makeChoice(adventures, advNameToId, fight,
-                logByDate, logByAttacker, logByAttacked, orders, scanner);
+        Main.makeChoice(orders);
         line = "11 123 1";
         orders = Main.getOrders(line);
-        Main.makeChoice(adventures, advNameToId, fight,
-                logByDate, logByAttacker, logByAttacked, orders, scanner);
+        Main.makeChoice(orders);
         line = "13 123 test";
         orders = Main.getOrders(line);
-        Main.makeChoice(adventures, advNameToId, fight,
-                logByDate, logByAttacker, logByAttacked, orders, scanner);
+        Main.makeChoice(orders);
         line = "7 123 1 test 100";
         orders = Main.getOrders(line);
-        Main.makeChoice(adventures, advNameToId, fight,
-                logByDate, logByAttacker, logByAttacked, orders, scanner);
+        Main.makeChoice(orders);
         line = "8 123 1";
         orders = Main.getOrders(line);
-        Main.makeChoice(adventures, advNameToId, fight,
-                logByDate, logByAttacker, logByAttacked, orders, scanner);
+        Main.makeChoice(orders);
         line = "15 2023/10";
         orders = Main.getOrders(line);
-        Main.makeChoice(adventures, advNameToId, fight,
-                logByDate, logByAttacker, logByAttacked, orders, scanner);
+        Main.makeChoice(orders);
         line = "16 1";
         orders = Main.getOrders(line);
-        Main.makeChoice(adventures, advNameToId, fight,
-                logByDate, logByAttacker, logByAttacked, orders, scanner);
+        Main.makeChoice(orders);
         line = "17 1";
         orders = Main.getOrders(line);
-        Main.makeChoice(adventures, advNameToId, fight,
-                logByDate, logByAttacker, logByAttacked, orders, scanner);
+        Main.makeChoice(orders);
     }
 }

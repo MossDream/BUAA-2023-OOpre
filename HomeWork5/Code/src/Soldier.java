@@ -20,6 +20,7 @@ public class Soldier {
                 incantation = incantation.substring(a, b + 1);
             }
         }
+
     }
 
     //  2 means "to" , you will see it in the os codes  next semester

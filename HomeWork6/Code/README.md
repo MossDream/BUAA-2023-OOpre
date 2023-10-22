@@ -220,3 +220,56 @@ Commodity whose id is 2 belongs to CritEquipment
 # Part 2
 
 Junit测试，**按原有架构基础上扩展即可**。
+
+# Part 3 bug修复记录
+
+## Bug 001
+
+### 说明
+
+给定的测试用例中，有一条指令为：
+
+```text
+4 674341 573832 /MpITw8 0 165922655 EpicEquipment  0.728
+```
+
+**检查发现，`EpicEquipment`和`0.728`之间有两个空格**。  
+因此在处理指令时，**按照原先以一个空格做为分隔符会出现`orders`数组长度为8的情况（多出一个空格字符串）**。  
+解决方案是将分隔符改为**一个及以上个空格**，即`orders.split("\\s+");`。
+
+### 改动详情
+
+在`Main.java`文件中：
+
+```diff
+//现第374行
+-  String[] strings = line.trim().split(" "); 
++  String[] strings = line.trim().split("\\s+");
+```
+
+## Bug 002
+
+### 说明
+
+对于雇佣的冒险者，当其本身的价值变化时，其雇主的价值也要变化。
+当瓶子和食物因为使用被丢弃时，其拥有者的价值也要变化。
+
+解决方案是：  
+修改`Adventure`类中的：
+`getPrice`方法，**在计算价值时，用递归的方法一直计算到没有雇佣任何冒险者的冒险者，然后逐层返回就可以实现价值的更新**。  
+`useBottle`和`eatFood`方法，**在使用完瓶子和食物达到丢弃条件时，更新价值并将其从`commodities`中移除**。
+
+### 改动详情
+只展示`getPrice`方法的修改。  
+在`Adventure.java`文件中：
+
+```diff
+//现第249行
+-        return this.price;
++        long totalPrice = 0;
++        for (Commodity commodity : commodities.values()) {
++            totalPrice += commodity.getPrice();
++        }
++        this.price = totalPrice;
++        return this.price;
+```

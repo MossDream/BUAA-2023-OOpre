@@ -86,7 +86,9 @@ public class Adventure implements Commodity {
                 bottle.setCapacity(0);
             } else {
                 takenBottles.get(bottleName).pollFirstEntry();
+                this.price -= bottle.getPrice();
                 bottles.remove(bottleId);
+                commodities.remove(bottleId);
             }
             System.out.println(bottleId + " " + this.hp);
             if (takenBottles.get(bottleName).isEmpty()) {
@@ -111,6 +113,8 @@ public class Adventure implements Commodity {
             this.level += food.getEnergy();
             this.maxBots = this.level / 5 + 1;
             foods.remove(foodId);
+            this.price -= food.getPrice();
+            commodities.remove(foodId);
             System.out.println(foodId + " " + this.level);
             if (takenFoods.get(foodName).isEmpty()) {
                 takenFoods.remove(foodName);
@@ -242,6 +246,11 @@ public class Adventure implements Commodity {
 
     @Override
     public long getPrice() {
+        long totalPrice = 0;
+        for (Commodity commodity : commodities.values()) {
+            totalPrice += commodity.getPrice();
+        }
+        this.price = totalPrice;
         return this.price;
     }
 

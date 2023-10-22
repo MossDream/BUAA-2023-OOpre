@@ -371,7 +371,7 @@ public class Main {
     // 以上是各操作具体实现
     // 解析传入的指令
     public static ArrayList<String> getOrders(String line) {
-        String[] strings = line.trim().split(" ");
+        String[] strings = line.trim().split("\\s+");
         return new ArrayList<>(Arrays.asList(strings));
     }
 
@@ -388,7 +388,7 @@ public class Main {
         n = Integer.parseInt(scanner.nextLine().trim());
         for (int i = 0; i < n; i++) {
             // 读入一条操作
-            String nextLine = scanner.nextLine();
+            String nextLine = scanner.nextLine().trim();
             // 解析操作并执行
             makeChoice(getOrders(nextLine));
         }

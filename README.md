@@ -42,4 +42,5 @@ BUAA于**2023年秋季**正式开设名为 **面向对象程序设计先导课**
 * **[第五次作业特别说明](https://github.com/MossDream/BUAA-2023-OOpre/blob/main/HomeWork5/Code/README.md)**
 * **[第六次作业指导书](https://github.com/MossDream/BUAA-2023-OOpre/blob/main/HomeWork6/Statement/README.md)**  
 * **[第六次作业解析与说明](https://github.com/MossDream/BUAA-2023-OOpre/blob/main/HomeWork6/Code/README.md)**
-
+* **[第七次作业指导书](https://github.com/MossDream/BUAA-2023-OOpre/blob/main/HomeWork7/Statement/README.md)**  
+* **[第七次作业解析与说明](https://github.com/MossDream/BUAA-2023-OOpre/blob/main/HomeWork7/Code/README.md)**

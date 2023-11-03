@@ -29,6 +29,10 @@ BUAA于**2023年秋季**正式开设名为 **面向对象程序设计先导课**
   > * **RAEDME**文件：本次作业要求(指导书)    
   > * 其他  
 
+⚠❗❗❗  
+ * **HomeWork8是博客作业，没有单独文件夹，欢迎前往此处阅读博客[OOpre总结](https://blog.csdn.net/X861314666/article/details/134209656?spm=1001.2014.3001.5502)**
+
+
 ## 索引🧾
 * **[第一次作业指导书](https://github.com/MossDream/BUAA-2023-OOpre/blob/main/HomeWork1/Statement/README.md)**  
 * **[第一次作业解析与说明](https://github.com/MossDream/BUAA-2023-OOpre/blob/main/HomeWork1/Code/README.md)** 
